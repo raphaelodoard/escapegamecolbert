@@ -1,0 +1,117 @@
+<html>
+<head>
+<meta charset="UTF-8">
+<script type="text/javascript">
+const secret  = "partie.soucolverbertville"; // mot secret en minuscules ! il s'affichera en majuscules quand même
+
+// met la champ à zéro au démarrage
+document.addEventListener("DOMContentLoaded", function() {
+      // Accéder à l'élément du champ de texte
+      var champTexte = document.getElementById("champmaj");
+
+      // Définir la valeur du champ de texte sur une chaîne vide
+      champTexte.value = "";
+    });
+
+function verifierTouche(event) {
+      // Vérifier si la touche appuyée est "Entrée" (code 13)
+      // en vrai je ne suis pas sûr que ça soit utile
+      if (event.keyCode === 13) {
+        // Appeler la fonction que vous souhaitez exécuter
+        verifierChamp();
+      }
+}
+
+
+
+function verifierChamp() {
+  // Récupérer la valeur du champ
+  var contenuChamp = document.getElementById("champmaj").value;
+console.log(contenuChamp);
+  // Récupérer l'élément image_cadenas
+  var imageCadenas = document.getElementById("image_cadenas");
+
+  // Vérifier si le contenu est égal au secret
+  if (contenuChamp.toLowerCase() == secret) {
+    // Remplacer l'image par cadenas2.gif
+    imageCadenas.src = "cadenas_anime.gif";
+    setTimeout(function() {
+      imageCadenas.src = "cadenas_ouvert.gif";
+      document.getElementById("message_final").style.visibility="visible";
+    }, 1000); // arrête l'anim et affiche le message après 1s
+  } else {
+    // Faire vibrer l'image (ajoutez ici le code pour faire vibrer l'image)
+    imageCadenas.classList.add("vibration"); // Utilisez une classe CSS pour ajouter l'effet de vibration
+    setTimeout(function() {
+      imageCadenas.classList.remove("vibration");
+    }, 1000); // vibre 1 seconde
+  }
+}
+
+</script>
+<style>
+body {
+  padding: 20px;
+  text-align:center;
+}
+
+h1 {
+  font: 24px sans-serif;
+}
+
+form > div {
+  margin: 0 0 20px 0;
+}
+
+.animation {
+
+}
+
+.majuscule
+{
+    text-transform: uppercase;
+    font: 12px monaco, monospace; 
+}
+
+#message_final {
+visibility:hidden;
+font : 22px sans-serif;
+margin : 20px;
+color: magenta;
+}
+
+.vibration {
+  animation: tilt-shaking 0.15s infinite;
+}
+@keyframes tilt-shaking {
+  0% { transform: rotate(0deg); }
+  25% { transform: rotate(5deg); }
+  50% { transform: rotate(0eg); }
+  75% { transform: rotate(-5deg); }
+  100% { transform: rotate(0deg); }
+}
+
+</style>
+</head>
+<body>
+<h1>Entrez l'identifiant :</h1>
+
+<div>
+<img src="cadenas_ferme.gif" id="image_cadenas" onclick=verifierChamp() />
+</div>
+
+  <div>
+  <div>
+  <input type="text" id="champmaj" class="majuscule" onkeydown="verifierTouche(event)" value="" size="30"/>
+  </div>
+
+<div id="message_final">
+Vous avez trouvé !
+</div>
+
+<div id="test">
+&copy;Colbert
+</div>
+
+</body>
+</html>
